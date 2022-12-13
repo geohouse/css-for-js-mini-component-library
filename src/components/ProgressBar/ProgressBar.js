@@ -14,9 +14,12 @@ const styles = {
   },
   large: {
     height: "24px",
-    padding: "4px",
   },
 };
+
+if (!styles) {
+  throw new Error(`Unknown size passed to ProgressBar`);
+}
 
 const ProgressBar = ({ value, size }) => {
   const appliedStyle = styles[size];
@@ -36,7 +39,9 @@ const ProgressBar = ({ value, size }) => {
             : { "border-radius": "4px" }
         }
       >
-        <Bar style={appliedStyle} />
+        <BarWrapper>
+          <Bar style={appliedStyle} />
+        </BarWrapper>
       </BarHolder>
     </div>
   );
@@ -50,8 +55,19 @@ const Bar = styled.div`
 
 const BarHolder = styled.div`
   width: 100;
-  box-shadow: inset 0px 2px 4px rgba(128, 128, 128, 0.35);
-  background: ${COLORS.transparentGray15};
+  box-shadow: inset 0px 2px 4px ${COLORS.transparentGray35};
+  background-color: ${COLORS.transparentGray15};
+  /* Need hidden here to round the right side of the progress bar as it gets very close to 100%.*/
+  overflow: hidden;
+`;
+
+// Provides the rounded right side to the large bar that has padding (otherwise the right side
+// stays square until it goes outside of the entire parent (including its padding))
+const BarWrapper = styled.div`
+  width: 100;
+  border-radius: 4px;
+  /* Need hidden here to round the right side of the progress bar as it gets very close to 100%.*/
+  overflow: hidden;
 `;
 
 // const Bar = styled.progress`
