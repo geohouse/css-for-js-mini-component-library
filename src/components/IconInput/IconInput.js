@@ -18,7 +18,7 @@ const IconInput = ({ label, icon, width = 250, size, placeholder }) => {
       <Icon
         id={icon}
         style={{ position: "absolute" }}
-        size={size === "small" ? 15 : 20}
+        size={size === "small" ? 16 : 24}
       ></Icon>
       <TextInput
         placeholder={placeholder}
@@ -39,6 +39,8 @@ const Wrapper = styled.div`
   &:focus {
     outline: 5px auto -webkit-focus-ring-color;
     outline: 5px auto Highlight;
+    /* Not currently working */
+    outline-offset: 2px;
   }
 `;
 
@@ -50,13 +52,16 @@ const TextInput = styled.input.attrs((props) => ({
   border: none;
   font-size: var(--size);
   width: var(--width);
-  padding-left: calc(var(--size) + 10px);
+  padding-left: calc(var(--size) + 12px);
   &::placeholder {
     color: ${COLORS.gray500};
     font-weight: 400;
   }
   color: ${COLORS.gray700};
   font-weight: 700;
+  &:hover {
+    color: ${COLORS.black};
+  }
 `;
 
 export default IconInput;
