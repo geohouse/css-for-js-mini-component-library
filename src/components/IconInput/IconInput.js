@@ -8,17 +8,38 @@ import VisuallyHidden from "../VisuallyHidden";
 
 const IconInput = ({ label, icon, width = 250, size, placeholder }) => {
   return (
-    <Wrapper style={{ width: width + "px" }}>
+    <Wrapper
+      style={{
+        "--width": width + "px",
+        "--size": size === "small" ? "1px" : "2px",
+      }}
+    >
       <VisuallyHidden>{label}</VisuallyHidden>
-      <Icon id={icon} style={{ display: "inline-block" }}></Icon>
-      <TextInput placeholder={placeholder}></TextInput>
+      <Icon
+        id={icon}
+        style={{ position: "absolute" }}
+        size={size === "small" ? 15 : 20}
+      ></Icon>
+      <TextInput
+        placeholder={placeholder}
+        style={{
+          "--size": size === "small" ? "14px" : "18px",
+          "--width": width + "px",
+        }}
+      ></TextInput>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  position: relative;
   border: none;
-  border-bottom: 1px solid ${COLORS.black};
+  border-bottom: var(--size) solid ${COLORS.black};
+  width: var(--width);
+  &:focus {
+    outline: 5px auto -webkit-focus-ring-color;
+    outline: 5px auto Highlight;
+  }
 `;
 
 const TextInput = styled.input.attrs((props) => ({
@@ -27,6 +48,15 @@ const TextInput = styled.input.attrs((props) => ({
   placeholder: props.placeholder,
 }))`
   border: none;
+  font-size: var(--size);
+  width: var(--width);
+  padding-left: calc(var(--size) + 10px);
+  &::placeholder {
+    color: ${COLORS.gray500};
+    font-weight: 400;
+  }
+  color: ${COLORS.gray700};
+  font-weight: 700;
 `;
 
 export default IconInput;
